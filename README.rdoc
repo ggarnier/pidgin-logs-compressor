@@ -1,0 +1,14 @@
+= Pidgin logs compressor
+
+A simple script to join Pidgin log files per day.
+
+When you enable logging in Pidgin[http://www.pidgin.im/], it creates a new log file and starts logging every conversation. But if you close the conversation window and then starts a new conversation with the same person, it creates a new log file. This script simply joins log files for the same contact and date on a single file.
+
+== Usage
+
+ruby pidgin-logs-compressor.rb <path_to_your_pidgin_logs>
+
+== TODO
+
+* Support to HTML log files
+* Convert it to a Rubygem
