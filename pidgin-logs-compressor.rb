@@ -15,12 +15,14 @@ def process_user_logs(path)
   return unless File.directory? path
 
   @files = {}
-  logfile_regexp = /([\d]{4}-[\d]{2}-[\d]{2})\..*\.txt/
-  dir = Dir.new(path)
-  dir.entries.each do |filename|
-    next if filename == '.' or filename == '..'
-    date_string = logfile_regexp.match(filename)[1]
-    datetime = Time.new(date_string)
+  logfile_regexp = /([\d]{4})-([\d]{2})-([\d]{2})\..*\.txt/
+  Dir.chdir path
+  Dir.glob('*.txt').each do |filename|
+    match = logfile_regexp.match(filename)
+    next if match == nil
+    
+    year, month, day = match[1..3]
+    datetime = Time.local(year, month, day)
     @files[datetime] = [] unless @files[datetime]
     @files[datetime] << "#{path}#{File::SEPARATOR}#{filename}"
   end
