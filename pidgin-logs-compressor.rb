@@ -28,6 +28,13 @@ def process_user_logs(path)
   end
 
   join_logs
+  
+  Dir.glob('*').each do |filename|
+    filepath = "#{path}#{File::SEPARATOR}#{filename}"
+    next unless File.directory? filepath
+    next if filename == '.' or filename == '..'
+    process_user_logs(filepath)
+  end
 end
 
 def join_logs
@@ -38,7 +45,6 @@ def join_logs
     filenames.each do |filename|
       file_content = File.readlines(filename)
       file_content -= [file_content[0]] unless new_content.size == 0
-      # tirar ultimo \n
       new_content << file_content
       File.delete(filename)
     end
